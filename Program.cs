@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using RestAPIAngular.Data;
+using AddressBookAPI.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

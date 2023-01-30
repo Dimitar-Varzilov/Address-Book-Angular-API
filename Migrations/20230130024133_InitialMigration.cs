@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace RestAPIAngular.Migrations
+namespace AddressBookAPI.Migrations
 {
     /// <inheritdoc />
     public partial class InitialMigration : Migration

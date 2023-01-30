@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RestAPIAngular.Data;
+using AddressBookAPI.Data;
 
 #nullable disable
 
-namespace RestAPIAngular.Migrations
+namespace AddressBookAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
     [Migration("20230130024133_InitialMigration")]

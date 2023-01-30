@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace RestAPIAngular.Data
+namespace AddressBookAPI.Data
 {
 	public class DataContext : DbContext
 	{

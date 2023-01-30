@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RestAPIAngular
+namespace AddressBookAPI
 {
 	public class AddressComment
 	{

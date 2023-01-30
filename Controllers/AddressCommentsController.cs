@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using RestAPIAngular;
-using RestAPIAngular.Data;
+using AddressBookAPI;
+using AddressBookAPI.Data;
 
-namespace RestAPIAngular.Controllers
+namespace AddressBookAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
