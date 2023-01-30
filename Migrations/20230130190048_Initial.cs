@@ -5,7 +5,7 @@
 namespace AddressBookAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,22 +32,23 @@ namespace AddressBookAPI.Migrations
                     CommentId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AddressTypeAddressIdAddressId = table.Column<int>(type: "int", nullable: true)
+                    AddressId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AddressComments", x => x.CommentId);
                     table.ForeignKey(
-                        name: "FK_AddressComments_Address_AddressTypeAddressIdAddressId",
-                        column: x => x.AddressTypeAddressIdAddressId,
+                        name: "FK_AddressComments_Address_AddressId",
+                        column: x => x.AddressId,
                         principalTable: "Address",
-                        principalColumn: "AddressId");
+                        principalColumn: "AddressId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AddressComments_AddressTypeAddressIdAddressId",
+                name: "IX_AddressComments_AddressId",
                 table: "AddressComments",
-                column: "AddressTypeAddressIdAddressId");
+                column: "AddressId");
         }
 
         /// <inheritdoc />
