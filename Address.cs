@@ -16,6 +16,6 @@ namespace AddressBookAPI
 		public string LastName { get; set; } = string.Empty;
 
 		[Required]
-		public int TelNumber { get; set; }
+		public int Telephone { get; set; }
 	}
 }
