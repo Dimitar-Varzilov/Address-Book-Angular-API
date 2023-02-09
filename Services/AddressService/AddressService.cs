@@ -1,4 +1,6 @@
 ﻿using AddressBookAPI.Data;
+using AddressBookAPI.Dtos;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,14 +9,19 @@ namespace AddressBookAPI.Services.AddressService
 	public class AddressService : ControllerBase, IAddressService
 	{
 		private readonly DataContext _context;
-		public AddressService(DataContext context)
+		private readonly IMapper _mapper;
+		public AddressService(DataContext context, IMapper mapper)
 		{
 			_context = context;
+			_mapper = mapper;
 		}
 
-		public async Task<ActionResult<List<Address>>> GetAddressesAsync()
+		public async Task<ActionResult<List<AddressDto>>> GetAddressesAsync()
 		{
-			return await _context.Address.ToListAsync();
+			var addresses = await _context.Address.ToListAsync();
+			var addressessDto = addresses.Select(address => _mapper.Map<AddressDto>(address));
+			List<AddressDto> addressDtos2 = addressessDto.ToList();
+			return addressDtos2;
 		}
 
 		public async Task<ActionResult<Address>> GetAddressAsync(int id)
@@ -60,7 +67,7 @@ namespace AddressBookAPI.Services.AddressService
 
 			}
 		}
-		
+
 		public async Task<ActionResult<List<Address>>> DeleteAddressAsync(int id)
 		{
 			var address = await _context.Address.FindAsync(id);

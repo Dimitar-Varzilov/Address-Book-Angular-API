@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AddressBookAPI
+namespace AddressBookAPI.Dtos
 {
-	public class Address
+	public class AddressDto
 	{
 		[Key]
 		public int AddressId { get; set; }
@@ -20,9 +20,5 @@ namespace AddressBookAPI
 
 		[Required]
 		public string UserAddress { get; set; } = string.Empty;
-
-		public DateTime LastUpdatedOn { get; set; }
-
-		public int LastUpdatedBy { get; set; }
 	}
 }

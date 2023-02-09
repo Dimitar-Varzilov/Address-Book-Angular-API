@@ -1,4 +1,6 @@
-﻿using AddressBookAPI.Services.AddressService;
+﻿using AddressBookAPI.Dtos;
+using AddressBookAPI.Services.AddressService;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AddressBookAPI.Controllers
@@ -11,14 +13,16 @@ namespace AddressBookAPI.Controllers
 
 		public AddressesController(IAddressService addressService)
 		{
-			_addressService = addressService;
+			_addressService = addressService;			
 		}
 
 		// GET: api/Addresses
 		[HttpGet]
 		public async Task<ActionResult<List<Address>>> GetAddressesAsync()
 		{
-			return await _addressService.GetAddressesAsync();
+			var addressessDto = await _addressService.GetAddressesAsync();
+			
+			return Ok(addressessDto);
 		}
 
 		// GET: api/Addresses/5
@@ -40,8 +44,14 @@ namespace AddressBookAPI.Controllers
 		// POST: api/Addresses
 		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
 		[HttpPost]
-		public async Task<ActionResult<List<Address>>> PostAddress(Address address)
+		public async Task<ActionResult<List<Address>>> PostAddress(AddressDto addressDto)
 		{
+			var address = new Address
+			{
+				FirstName = addressDto.FirstName,
+				LastName = addressDto.LastName,
+				Telephone = addressDto.Telephone,
+			};
 			return await _addressService.PostAddressAsync(address);
 		}
 

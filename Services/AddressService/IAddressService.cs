@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AddressBookAPI.Dtos;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AddressBookAPI.Services.AddressService
 {
 	public interface IAddressService
 	{
-		Task<ActionResult<List<Address>>> GetAddressesAsync();
+		Task<ActionResult<List<AddressDto>>> GetAddressesAsync();
 
 		Task<ActionResult<Address>> GetAddressAsync(int id);
 
