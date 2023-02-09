@@ -16,12 +16,12 @@ namespace AddressBookAPI.Services.AddressService
 			_mapper = mapper;
 		}
 
-		public async Task<ActionResult<List<AddressDto>>> GetAddressesAsync()
+		public ActionResult<List<AddressDto>> GetAddressesAsync()
 		{
-			var addresses = await _context.Address.ToListAsync();
+			var addresses = _context.Address.ToListAsync();
 			var addressessDto = addresses.Select(address => _mapper.Map<AddressDto>(address));
-			List<AddressDto> addressDtos2 = addressessDto.ToList();
-			return addressDtos2;
+			List<AddressDto> addresses2 = addressessDto.ToList();
+			return Ok(addressessDto);
 		}
 
 		public async Task<ActionResult<Address>> GetAddressAsync(int id)
