@@ -1,6 +1,5 @@
-﻿using AddressBookAPI.Data;
+﻿using AddressBookAPI.Services.AddressService;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace AddressBookAPI.Controllers
 {
@@ -8,95 +7,49 @@ namespace AddressBookAPI.Controllers
 	[ApiController]
 	public class AddressesController : ControllerBase
 	{
-		private readonly DataContext _context;
+		private readonly IAddressService _addressService;
 
-		public AddressesController(DataContext context)
+		public AddressesController(IAddressService addressService)
 		{
-			_context = context;
+			_addressService = addressService;
 		}
 
 		// GET: api/Addresses
 		[HttpGet]
-		public async Task<ActionResult<IEnumerable<Address>>> GetAddress()
+		public async Task<ActionResult<List<Address>>> GetAddressesAsync()
 		{
-			return await _context.Address.ToListAsync();
+			return await _addressService.GetAddressesAsync();
 		}
 
 		// GET: api/Addresses/5
 		[HttpGet("{id}")]
-		public async Task<ActionResult<Address>> GetAddress(int id)
+		public async Task<ActionResult<Address>> GetAddressAsync(int id)
 		{
-			var address = await _context.Address.FindAsync(id);
-
-			if (address == null)
-			{
-				return NotFound();
-			}
-
-			return address;
+			return await _addressService.GetAddressAsync(id);
 		}
 
 		// PUT: api/Addresses/5
 		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
 		[HttpPut("{id}")]
-		public async Task<IActionResult> PutAddress(int id, Address address)
+		public async Task<ActionResult<List<Address>>> PutAddress(int id, Address address)
 		{
-			if (id != address.AddressId)
-			{
-				return BadRequest();
-			}
 
-			_context.Entry(address).State = EntityState.Modified;
-
-			try
-			{
-				await _context.SaveChangesAsync();
-			}
-			catch (DbUpdateConcurrencyException)
-			{
-				if (!AddressExists(id))
-				{
-					return NotFound();
-				}
-				else
-				{
-					throw;
-				}
-			}
-
-			return NoContent();
+			return await _addressService.PutAddress(id, address);
 		}
 
 		// POST: api/Addresses
 		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
 		[HttpPost]
-		public async Task<ActionResult<Address>> PostAddress(Address address)
+		public async Task<ActionResult<List<Address>>> PostAddress(Address address)
 		{
-			_context.Address.Add(address);
-			await _context.SaveChangesAsync();
-
-			return CreatedAtAction("GetAddress", new { id = address.AddressId }, address);
+			return await _addressService.PostAddressAsync(address);
 		}
 
 		// DELETE: api/Addresses/5
 		[HttpDelete("{id}")]
-		public async Task<IActionResult> DeleteAddress(int id)
+		public async Task<ActionResult<List<Address>>> DeleteAddress(int id)
 		{
-			var address = await _context.Address.FindAsync(id);
-			if (address == null)
-			{
-				return NotFound();
-			}
-
-			_context.Address.Remove(address);
-			await _context.SaveChangesAsync();
-
-			return NoContent();
-		}
-
-		private bool AddressExists(int id)
-		{
-			return _context.Address.Any(e => e.AddressId == id);
+			return await _addressService.DeleteAddressAsync(id);
 		}
 	}
 }
