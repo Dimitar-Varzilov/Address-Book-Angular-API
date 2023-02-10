@@ -19,6 +19,19 @@ namespace AddressBookAPI.Dtos
 		public string Telephone { get; set; } = string.Empty;
 
 		[Required]
+		[MaxLength(4)]
+		[MinLength(4)]
+		public int PostalCode { get; set; }
+
+		[Required]
+		[StringLength(10)]
+		[MinLength(3)]
+		public string City { get; set; } = string.Empty;
+
+		[Required]
+		public string Country { get; set; } = string.Empty;
+
+		[Required]
 		public string UserAddress { get; set; } = string.Empty;
 	}
 }
