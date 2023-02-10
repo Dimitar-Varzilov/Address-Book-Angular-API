@@ -7,7 +7,8 @@ namespace AddressBookAPI
 	{
 		public AutoMapperProfile()
 		{
-			CreateMap<Address , AddressDto>();
+			CreateMap<Address, AddressDto>();
+			CreateMap<AddressDto, Address>();
 		}
 	}
 }

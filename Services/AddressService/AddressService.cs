@@ -16,15 +16,14 @@ namespace AddressBookAPI.Services.AddressService
 			_mapper = mapper;
 		}
 
-		public ActionResult<List<AddressDto>> GetAddressesAsync()
+		public async Task<ActionResult<List<Address>>> GetAddressesAsync()
 		{
-			var addresses = _context.Address.ToListAsync();
+			var addresses = await _context.Address.ToListAsync();
 			var addressessDto = addresses.Select(address => _mapper.Map<AddressDto>(address));
-			List<AddressDto> addresses2 = addressessDto.ToList();
 			return Ok(addressessDto);
 		}
 
-		public async Task<ActionResult<Address>> GetAddressAsync(int id)
+		public async Task<ActionResult<AddressDto>> GetAddressAsync(int id)
 		{
 			var address = await _context.Address.FindAsync(id);
 
@@ -32,19 +31,22 @@ namespace AddressBookAPI.Services.AddressService
 			{
 				return NotFound();
 			}
-
-			return address;
+			var addressDto = _mapper.Map<AddressDto>(address);
+			return addressDto;
 		}
 
-		public async Task<ActionResult<List<Address>>> PostAddressAsync(Address address)
+		public async Task<ActionResult<List<Address>>> AddAddressAsync(AddressDto newAddress)
 		{
-			_context.Address.Add(address);
+			var mappedAddress = _mapper.Map<Address>(newAddress);
+			mappedAddress.LastUpdatedOn = DateTime.Now;
+			mappedAddress.LastUpdatedBy = 1;
+			_context.Address.Add(mappedAddress);
 			await _context.SaveChangesAsync();
 
-			return await _context.Address.ToListAsync();
+			return await GetAddressesAsync();
 		}
 
-		public async Task<ActionResult<List<Address>>> PutAddress(int id, Address address)
+		public async Task<ActionResult<List<Address>>> UpdateAddressAsync(int id, AddressDto address)
 		{
 			try
 			{
@@ -57,9 +59,12 @@ namespace AddressBookAPI.Services.AddressService
 					return NotFound();
 				}
 
-				_context.Entry(address).State = EntityState.Modified;
+				var mappedAddress = _mapper.Map<Address>(address);
+				mappedAddress.LastUpdatedOn = DateTime.Now;
+				mappedAddress.LastUpdatedBy = 1;
+				_context.Entry(mappedAddress).State = EntityState.Modified;
 				await _context.SaveChangesAsync();
-				return await _context.Address.ToListAsync();
+				return await GetAddressesAsync();
 			}
 			catch (DbUpdateConcurrencyException)
 			{
@@ -79,12 +84,11 @@ namespace AddressBookAPI.Services.AddressService
 			_context.Address.Remove(address);
 			await _context.SaveChangesAsync();
 
-			return await _context.Address.ToListAsync();
+			return await GetAddressesAsync();
 		}
 		private bool AddressExists(int id)
 		{
 			return _context.Address.Any(e => e.AddressId == id);
 		}
-
 	}
 }

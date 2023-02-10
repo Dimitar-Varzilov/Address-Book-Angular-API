@@ -5,13 +5,13 @@ namespace AddressBookAPI.Services.AddressService
 {
 	public interface IAddressService
 	{
-		Task<ActionResult<List<AddressDto>>> GetAddressesAsync();
+		Task<ActionResult<List<Address>>> GetAddressesAsync();
 
-		Task<ActionResult<Address>> GetAddressAsync(int id);
+		Task<ActionResult<AddressDto>> GetAddressAsync(int id);
 
-		Task<ActionResult<List<Address>>> PostAddressAsync(Address address);
+		Task<ActionResult<List<Address>>> AddAddressAsync(AddressDto address);
 
-		Task<ActionResult<List<Address>>> PutAddress(int id, Address address);
+		Task<ActionResult<List<Address>>> UpdateAddressAsync(int id, AddressDto address);
 
 		Task<ActionResult<List<Address>>> DeleteAddressAsync(int id);
 	}
