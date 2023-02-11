@@ -17,9 +17,11 @@ namespace AddressBookAPI.Controllers
 
 		// GET: api/Addresses
 		[HttpGet]
-		public Task<ActionResult<List<Address>>> GetAddressesAsync()
+		public Task<ActionResult<List<Address>>> GetAddressesAsync(int? resultsToShow)
 		{
-			return _addressService.GetAddressesAsync();
+			return _addressService.GetTrimmedAddressesAsync(10);
+			return _addressService.GetTrimmedAddressesAsync(Convert.ToInt32(resultsToShow));
+
 		}
 
 		// GET: api/Addresses/5
