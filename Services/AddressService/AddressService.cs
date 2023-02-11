@@ -63,8 +63,6 @@ namespace AddressBookAPI.Services.AddressService
 				Console.WriteLine(address.PostalCode);
 				Convert.ToInt32(address.PostalCode);
 				var mappedAddress = _mapper.Map<Address>(address);
-				mappedAddress.LastUpdatedOn = DateTime.Now;
-				mappedAddress.LastUpdatedBy = 1;
 				_context.Entry(mappedAddress).State = EntityState.Modified;
 				await _context.SaveChangesAsync();
 				return await GetAddressesAsync();
