@@ -3,6 +3,7 @@ using AddressBookAPI.Dtos;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace AddressBookAPI.Services.AddressService
 {
@@ -38,6 +39,7 @@ namespace AddressBookAPI.Services.AddressService
 		public async Task<ActionResult<List<Address>>> AddAddressAsync(AddressDto newAddress)
 		{
 			var mappedAddress = _mapper.Map<Address>(newAddress);
+			Convert.ToInt32(mappedAddress.PostalCode);
 			mappedAddress.LastUpdatedOn = DateTime.Now;
 			mappedAddress.LastUpdatedBy = 1;
 			_context.Address.Add(mappedAddress);
@@ -58,7 +60,9 @@ namespace AddressBookAPI.Services.AddressService
 				{
 					return NotFound();
 				}
-
+				Console.Clear();
+				Console.WriteLine(address.PostalCode);
+				Convert.ToInt32(address.PostalCode);
 				var mappedAddress = _mapper.Map<Address>(address);
 				mappedAddress.LastUpdatedOn = DateTime.Now;
 				mappedAddress.LastUpdatedBy = 1;

@@ -40,10 +40,9 @@ namespace AddressBookAPI.Controllers
 		// PUT: api/Addresses/5
 		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
 		[HttpPut("{id}")]
-		public async Task<ActionResult<List<Address>>> UpdateAddress(int id, AddressDto address)
+		public async Task<ActionResult<List<Address>>> UpdateAddress(int id, AddressDto updatedAddress)
 		{
-
-			return await _addressService.UpdateAddressAsync(id, address);
+			return await _addressService.UpdateAddressAsync(id, updatedAddress);
 		}
 
 		// DELETE: api/Addresses/5

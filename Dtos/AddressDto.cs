@@ -21,7 +21,7 @@ namespace AddressBookAPI.Dtos
 		[Required]
 		[MaxLength(4)]
 		[MinLength(4)]
-		public int PostalCode { get; set; }
+		public string PostalCode { get; set; } = string.Empty;
 
 		[Required]
 		[StringLength(10)]
