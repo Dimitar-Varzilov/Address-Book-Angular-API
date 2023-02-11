@@ -40,7 +40,6 @@ namespace AddressBookAPI.Services.AddressService
 		{
 			var mappedAddress = _mapper.Map<Address>(newAddress);
 			Convert.ToInt32(mappedAddress.PostalCode);
-			mappedAddress.LastUpdatedOn = DateTime.Now;
 			mappedAddress.LastUpdatedBy = 1;
 			_context.Address.Add(mappedAddress);
 			await _context.SaveChangesAsync();

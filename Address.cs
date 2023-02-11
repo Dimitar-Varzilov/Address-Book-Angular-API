@@ -33,8 +33,8 @@ namespace AddressBookAPI
 		[Required]
 		public string UserAddress { get; set; } = string.Empty;
 
-		public DateTime LastUpdatedOn { get; set; }
+		public DateTime LastUpdatedOn { get; set; } = DateTime.Now;
 
-		public int LastUpdatedBy { get; set; }
+		public int LastUpdatedBy { get; set; } = 1;
 	}
 }
