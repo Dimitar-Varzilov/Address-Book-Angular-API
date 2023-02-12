@@ -23,17 +23,16 @@ namespace AddressBookAPI.Services.AddressService
 			return Ok(addressessDto);
 		}
 
-		public async Task<ActionResult<List<Address>>> GetTrimmedAddressesAsync(int count, string query)
+		public async Task<ActionResult<List<Address>>> GetTrimmedAddressesAsync(int count)
 		{
-			List<Address> results = await _context.Address.ToListAsync();
-			//results.Find(query);
+			
 			List<Address> trimmed5addresses = await _context.Address.Take(count).ToListAsync();
 			Console.Clear();
 			var addressessDto = trimmed5addresses.Select(address => _mapper.Map<AddressDto>(address));
 			return Ok(addressessDto);
 		}
 
-		public async Task<ActionResult<AddressDto>> GetAddressAsync(int id)
+		public async Task<ActionResult<AddressDto>> GetOneAddressAsync(int id)
 		{
 			var address = await _context.Address.FindAsync(id);
 

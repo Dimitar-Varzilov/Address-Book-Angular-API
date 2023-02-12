@@ -2,7 +2,7 @@
 {
 	public class Paginator
 	{
-		int _paginator;
+		 private int _paginator;
 		public Paginator(int pagesToShow)
 		{
 			_paginator= pagesToShow;
