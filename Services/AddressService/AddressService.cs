@@ -23,8 +23,10 @@ namespace AddressBookAPI.Services.AddressService
 			return Ok(addressessDto);
 		}
 
-		public async Task<ActionResult<List<Address>>> GetTrimmedAddressesAsync(int count)
+		public async Task<ActionResult<List<Address>>> GetTrimmedAddressesAsync(int count, string query)
 		{
+			List<Address> results = await _context.Address.ToListAsync();
+			//results.Find(query);
 			List<Address> trimmed5addresses = await _context.Address.Take(count).ToListAsync();
 			Console.Clear();
 			var addressessDto = trimmed5addresses.Select(address => _mapper.Map<AddressDto>(address));

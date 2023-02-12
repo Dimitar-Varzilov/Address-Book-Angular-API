@@ -17,10 +17,10 @@ namespace AddressBookAPI.Controllers
 
 		// GET: api/Addresses
 		[HttpGet]
-		public Task<ActionResult<List<Address>>> GetAddressesAsync(int? resultsToShow)
+		public Task<ActionResult<List<Address>>> GetAddressesAsync(int resultsToShow = 100, string query = "")
 		{
-			return _addressService.GetTrimmedAddressesAsync(10);
-			return _addressService.GetTrimmedAddressesAsync(Convert.ToInt32(resultsToShow));
+			//return _addressService.GetTrimmedAddressesAsync(10);
+			return _addressService.GetTrimmedAddressesAsync(resultsToShow, query);
 
 		}
 
