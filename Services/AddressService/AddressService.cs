@@ -1,5 +1,6 @@
 ﻿using AddressBookAPI.Data;
 using AddressBookAPI.Dtos;
+using AddressBookAPI.Utils;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -25,10 +26,11 @@ namespace AddressBookAPI.Services.AddressService
 
 		public async Task<ActionResult<List<Address>>> GetTrimmedAddressesAsync(int count)
 		{
-			
-			List<Address> trimmed5addresses = await _context.Address.Take(count).ToListAsync();
-			Console.Clear();
-			var addressessDto = trimmed5addresses.Select(address => _mapper.Map<AddressDto>(address));
+			List<Address> trimmed5addresses = await _context.Address.ToListAsync();
+			Paginator paginator = new(trimmed5addresses, count);
+			//Console.Clear();
+			Console.WriteLine(paginator.GetPagesCount());
+			var addressessDto = paginator.GetPagesList().Select(address => _mapper.Map<AddressDto>(address));
 			return Ok(addressessDto);
 		}
 

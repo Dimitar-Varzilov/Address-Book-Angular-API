@@ -17,7 +17,7 @@ namespace AddressBookAPI.Controllers
 
 		// GET: api/Addresses
 		[HttpGet]
-		public Task<ActionResult<List<Address>>> GetAddressesAsync(int resultsToShow = 100)
+			public Task<ActionResult<List<Address>>> GetAddressesAsync(int resultsToShow = 5)
 		{
 			return _addressService.GetTrimmedAddressesAsync(resultsToShow);
 
@@ -25,7 +25,7 @@ namespace AddressBookAPI.Controllers
 
 		// GET: api/Addresses/5
 		[HttpGet("{id}")]
-		public Task<ActionResult<AddressDto>> GetAddressAsync(int id)
+		public Task<ActionResult<AddressDto>> GetOneAddressAsync(int id)
 		{
 			return _addressService.GetOneAddressAsync(id);
 		}
