@@ -17,9 +17,9 @@ namespace AddressBookAPI.Controllers
 
 		// GET: api/Addresses
 		[HttpGet]
-			public Task<ActionResult<List<Address>>> GetAddressesAsync(int resultsToShow = 5)
+			public Task<ActionResult<List<Address>>> GetAddressesAsync(int resultsToShow = 5, string query = "розе")
 		{
-			return _addressService.GetTrimmedAddressesAsync(resultsToShow);
+			return _addressService.GetTrimmedAddressesAsync(resultsToShow, query);
 
 		}
 

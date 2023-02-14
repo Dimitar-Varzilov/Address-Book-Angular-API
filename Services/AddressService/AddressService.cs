@@ -4,6 +4,9 @@ using AddressBookAPI.Utils;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol;
+using System.Collections.Generic;
+using System.Net;
 
 namespace AddressBookAPI.Services.AddressService
 {
@@ -24,12 +27,24 @@ namespace AddressBookAPI.Services.AddressService
 			return Ok(addressessDto);
 		}
 
-		public async Task<ActionResult<List<Address>>> GetTrimmedAddressesAsync(int count)
+		public async Task<ActionResult<List<Address>>> GetTrimmedAddressesAsync(int count, string query)
 		{
-			List<Address> trimmed5addresses = await _context.Address.ToListAsync();
-			Paginator paginator = new(trimmed5addresses, count);
-			//Console.Clear();
-			Console.WriteLine(paginator.GetPagesCount());
+			//var results = await _context.Address.ContainsAsync();
+			var predicate = (Address item) => {
+				AddressDto addressDto = _mapper.Map<AddressDto>(item);
+				return addressDto.ToString().Contains(query.Trim().ToLower());
+			};
+			var results2 = await _context.Address.Where(predicate);
+			//await _context.Address.Where()
+			//Console.WriteLine(results2.);
+			List <Address> trimmed5addresses = await _context.Address.ToListAsync();
+			var filteredResults = trimmed5addresses.FindAll(listItem =>
+			{
+				AddressDto mappedItem = _mapper.Map<AddressDto>(listItem);
+				return mappedItem.ToJson().Contains(query);
+			}
+			);
+			Paginator paginator = new(filteredResults, count);
 			var addressessDto = paginator.GetPagesList().Select(address => _mapper.Map<AddressDto>(address));
 			return Ok(addressessDto);
 		}
