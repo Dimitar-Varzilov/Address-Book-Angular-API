@@ -29,19 +29,11 @@ namespace AddressBookAPI.Services.AddressService
 
 		public async Task<ActionResult<List<Address>>> GetTrimmedAddressesAsync(int count, string query)
 		{
-			//var results = await _context.Address.ContainsAsync();
-			var predicate = (Address item) => {
-				AddressDto addressDto = _mapper.Map<AddressDto>(item);
-				return addressDto.ToString().Contains(query.Trim().ToLower());
-			};
-			var results2 = await _context.Address.Where(predicate);
-			//await _context.Address.Where()
-			//Console.WriteLine(results2.);
-			List <Address> trimmed5addresses = await _context.Address.ToListAsync();
+			List<Address> trimmed5addresses = await _context.Address.ToListAsync();
 			var filteredResults = trimmed5addresses.FindAll(listItem =>
 			{
 				AddressDto mappedItem = _mapper.Map<AddressDto>(listItem);
-				return mappedItem.ToJson().Contains(query);
+				return mappedItem.ToJson().Trim().ToLower().Contains(query.Trim().ToLower());
 			}
 			);
 			Paginator paginator = new(filteredResults, count);
